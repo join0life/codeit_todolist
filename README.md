@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 코드잇 과제
 
-## Getting Started
+투두리스트 만들기
 
-First, run the development server:
+## 기술 스택
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- Next.js (App Router)
+- Typescript
+
+## 페이지 & 기능 구성
+
+- 할 일 목록 페이지(/)
+  - 목록 조회
+    - [ ] 로고 버튼 클릭 시 ('/') 페이지로 이동 (새로고침)
+    - [ ] 진행 중인 할 일과 완료한 할 일을 나누어 볼 수 있음
+  - 할 일 추가
+    - [ ] 상단 입력창에 할 일 테스트 입력 -> 추가하기 버튼 클릭 & 엔터 -> 할 일 생성
+  - 할 일 완료
+    - [ ] 진행 중 할 일 항목의 왼쪽 버튼을 다시 클릭하면 체크 표시가 사라지고 진행 중 상태가 됨
+- 할 일 상세 페이지(/items/{itemsId})
+  - 할 일 수정
+    - [ ] 할 일 항목 클릭한 후 항목 수정 가능
+    - [ ] 항목 이름 수정
+    - [ ] 할 일 상태(진행/완료) 수정
+    - [ ] 메모 추가
+    - [ ] 이미지 첨부(1개)
+      - [ ] 페이지 파일 이름은 영어로만
+      - [ ] 파일 크기는 5MB 이하
+    - [ ] 수정 완료 버튼 클릭 시 수정 사항 반영, 할 일 목록 페이지로 이동
+  - 할 일 삭제
+    - [ ] 삭제하기 버튼을 클릭하면 할 일 삭제 가능, 할 일 목록 페이지로 이동
+
+## 폴더 구조
+
 ```
+/src
+  /app
+    /items             
+      /[itemId]
+        page.tsx           # 할 일 상세 페이지
+    layout.tsx           # 메인 레이아웃
+    page.tsx             # 홈 페이지
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  /components         # 공통(재사용) 컴포넌트
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  /styles
+    globals.css        # 전역 CSS
+    typography.css     # 폰트 CSS
+    variables.css      # 컴포넌트 CSS
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
