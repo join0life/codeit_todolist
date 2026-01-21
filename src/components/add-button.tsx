@@ -1,6 +1,14 @@
-export default function AddButton() {
+export default function AddButton({
+  disabled,
+  onClick,
+}: {
+  disabled?: boolean;
+  onClick?: () => void;
+}) {
   return (
     <button
+      disabled={disabled}
+      onClick={onClick}
       type="button"
       className="relative h-14 w-14 cursor-pointer sm:w-40.5 xl:w-42"
     >

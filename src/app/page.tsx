@@ -1,6 +1,7 @@
 import CreateTodoInput from "@/components/create-todo-input";
-import AddButton from "@/components/add-button";
 import TodoList from "@/components/todo-list";
+import TodoEmpty from "@/components/todo-empty";
+import DoneEmpty from "@/components/done-empty";
 
 export default function Home() {
   return (
@@ -8,11 +9,10 @@ export default function Home() {
       <div className="flex flex-col gap-10">
         <section className="flex w-full items-center justify-center gap-2 sm:gap-4 xl:gap-4">
           <CreateTodoInput />
-          <AddButton />
         </section>
 
         <section className="flex flex-col gap-6 md:flex-row">
-          {/** 한 일 목록 */}
+          {/** TODO 목록 */}
           <div className="flex w-full flex-col gap-4 md:w-1/2">
             <svg
               width="101"
@@ -27,12 +27,10 @@ export default function Home() {
                 fill="#15803D"
               />
             </svg>
-            <div>
-              <TodoList />
-            </div>{" "}
+            <TodoList showCompleted={false} empty={<TodoEmpty />} />
           </div>
 
-          {/** 할 일 목록 */}
+          {/** DONE 목록 */}
           <div className="flex w-full flex-col gap-4 md:w-1/2">
             <svg
               width="97"
@@ -47,7 +45,7 @@ export default function Home() {
                 fill="#FCD34D"
               />
             </svg>
-            <TodoList />
+            <TodoList showCompleted={true} empty={<DoneEmpty />} />
           </div>
         </section>
       </div>

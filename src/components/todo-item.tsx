@@ -1,34 +1,91 @@
+"use client";
+import { updateTodo } from "@/app/actions/todo-actions";
+import Link from "next/link";
+import { useState } from "react";
+
 export default function TodoItem({
   label,
-  checked = false,
+  checked,
+  itemId,
 }: {
   label: string;
   checked?: boolean;
+  itemId: number;
 }) {
-  return (
-    <label className="flex h-12 w-full max-w-[588px] cursor-pointer items-center gap-4 rounded-full border-2 border-slate-900 bg-white px-4 transition-colors peer-has-[:checked]:bg-violet-100">
-      {/* 실제 checkbox */}
-      <input type="checkbox" className="peer hidden" defaultChecked={checked} />
+  const [isCompleted, setIsCompleted] = useState(checked);
+  const [isSaving, setIsSaving] = useState(false);
 
-      {/* 왼쪽 원 */}
-      <span className="flex h-8 w-8 items-center justify-center rounded-full border-2 border-slate-900 bg-yellow-50 transition-colors peer-checked:bg-violet-600">
-        {/* 체크 표시 */}
+  const handleToggle = async (next: boolean) => {
+    setIsCompleted(next);
+    try {
+      setIsSaving(true);
+      await updateTodo({ itemId, isCompleted: next });
+    } catch (e) {
+      setIsCompleted((prev) => !prev);
+      console.error(e);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <div className="flex w-full items-center rounded-[27px] border-2 border-slate-900 bg-white p-2 has-[input:checked]:bg-violet-100">
+      <label
+        className="flex cursor-pointer items-center gap-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <input
+          type="checkbox"
+          className="peer sr-only"
+          checked={isCompleted}
+          disabled={isSaving}
+          onChange={(e) => handleToggle(e.target.checked)}
+        />
+
+        {/* 기본 체크 박스 */}
         <svg
-          viewBox="0 0 24 24"
-          className="h-4 w-4 fill-none stroke-white stroke-[3] opacity-0 peer-checked:opacity-100"
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="block peer-checked:hidden"
         >
+          <circle
+            cx="16"
+            cy="16"
+            r="15"
+            fill="#FEFCE8"
+            stroke="#0F172A"
+            strokeWidth="2"
+          />
+        </svg>
+
+        {/* 체크 시 보라색 원으로 교체 */}
+        <svg
+          width="32"
+          height="32"
+          className="hidden peer-checked:block"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="16" cy="16" r="16" fill="#7C3AED" />
           <path
-            d="M4 12l5 5 11-11"
+            d="M8 16.2857L13.8182 22L24 12"
+            stroke="#FEFCE8"
+            strokeWidth="4"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-      </span>
-
-      {/* 텍스트 */}
-      <span className="text-slate-800 transition-colors peer-checked:text-slate-900">
-        {label}
-      </span>
-    </label>
+        <Link
+          href={`/items/${itemId}`}
+          className="ml-auto peer-checked:line-through"
+        >
+          <p className="text-slate-800">{label}</p>
+        </Link>
+      </label>
+    </div>
   );
 }

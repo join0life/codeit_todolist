@@ -4,30 +4,32 @@ export default function Page() {
       <div className="mx-auto flex max-w-249 flex-col gap-6">
         {/* 할 일 체크박스 영역 */}
         <section>
-          <div className="relative mx-auto h-16 w-85.75 rounded-3xl border-2 border-solid border-slate-900 bg-white sm:w-174 md:w-174 lg:w-249 xl:w-249">
-            <div className="absolute top-1/2 left-1/2 flex -translate-x-1/2 -translate-y-1/2 items-center justify-center gap-4">
-              <input type="checkbox" hidden />
-              <svg
-                width="32"
-                height="32"
-                viewBox="0 0 32 32"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <circle
-                  cx="16"
-                  cy="16"
-                  r="15"
-                  fill="#FEFCE8"
-                  stroke="#0F172A"
-                  stroke-width="2"
-                />
-              </svg>
-              <p className="line-clamp-1 text-center text-xl font-bold text-slate-900 underline decoration-slate-900 decoration-1 underline-offset-2">
-                비타민 챙겨 먹기
-              </p>
-            </div>
-          </div>
+          <label className="peer-has-[:checked]:bg-violet-100 mx-auto flex h-16 w-full min-w-85.75 items-center justify-center gap-4 rounded-3xl border-2 border-slate-900 px-4">
+            <input type="checkbox" className="peer" hidden defaultChecked={false}/>
+
+            <svg
+              className="shrink-0"
+              width="32"
+              height="32"
+              viewBox="0 0 32 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+            >
+              <circle
+                cx="16"
+                cy="16"
+                r="15"
+                fill="#FEFCE8"
+                stroke="#0F172A"
+                strokeWidth="2"
+              />
+            </svg>
+
+            <p className="text-xl font-bold text-slate-900 underline decoration-slate-900 decoration-1 underline-offset-2">
+              비타민 챙겨 먹기
+            </p>
+          </label>
         </section>
 
         {/* 이미지 & 메모 영역 */}
@@ -42,8 +44,8 @@ export default function Page() {
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
-                clip-rule="evenodd"
+                fillRule="evenodd"
+                clipRule="evenodd"
                 d="M37.9466 5.33337H26.6666C14.8846 5.33337 5.33331 14.8846 5.33331 26.6667V37.9734C5.33331 49.7554 14.8846 59.3067 26.6666 59.3067H37.9466C49.7287 59.3067 59.28 49.7554 59.28 37.9734V26.6667C59.28 14.8846 49.7287 5.33337 37.9466 5.33337ZM21.6533 16.32C24.5988 16.32 26.9866 18.7079 26.9866 21.6534C26.9866 24.5989 24.5988 26.9867 21.6533 26.9867C18.7078 26.9867 16.32 24.5989 16.32 21.6534C16.32 18.7079 18.7078 16.32 21.6533 16.32ZM41.36 53.6534C48.9097 50.8339 53.9231 43.6323 53.9466 35.5734L53.8666 30.9867C53.8666 29.8934 53.6533 27.84 53.6533 27.84H49.3066C39.2437 27.8706 30.0548 33.5633 25.5466 42.56C22.2744 39.6348 18.0424 38.0122 13.6533 38H10.4266C10.1886 44.1993 13.5557 49.9775 19.0666 52.8267C21.0367 53.8762 23.2345 54.4256 25.4666 54.4267H36.5866C38.2107 54.4499 39.8263 54.1882 41.36 53.6534Z"
                 fill="#E2E8F0"
               />
@@ -61,14 +63,14 @@ export default function Page() {
               <path
                 d="M23 32L41 32"
                 stroke="#64748B"
-                stroke-width="3"
-                stroke-linecap="round"
+                strokeWidth="3"
+                strokeLinecap="round"
               />
               <path
                 d="M32 41L32 23"
                 stroke="#64748B"
-                stroke-width="3"
-                stroke-linecap="round"
+                strokeWidth="3"
+                strokeLinecap="round"
               />
             </svg>
           </div>
