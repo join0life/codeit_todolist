@@ -4,3 +4,16 @@
 * {
   font-family: "NanumSquare";
 }
+
+textarea.scrollbar-amber::-webkit-scrollbar {
+  width: 10px;
+}
+
+textarea.scrollbar-amber::-webkit-scrollbar-thumb {
+  background-color: #FDE68A !important; /* amber-200 */
+  border-radius: 9999px;
+}
+
+textarea.scrollbar-amber::-webkit-scrollbar-track {
+  background: transparent;
+}
