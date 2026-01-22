@@ -6,7 +6,11 @@ import { useEffect, useRef, useState } from "react";
 import editBtn from "@/assets/edit-btn.png";
 import { TENANT_ID } from "@/constants";
 import { useRouter } from "next/navigation";
-import { updateTodoWithImage, uploadImage } from "@/app/actions/todo-actions";
+import {
+  deleteTodo,
+  updateTodoWithImage,
+  uploadImage,
+} from "@/app/actions/todo-actions";
 
 type ImageData = {
   file: File;
@@ -93,6 +97,9 @@ export default function TodoDetailItem({
     adjustHeight();
   }, [memo]);
 
+  /**
+   * 수정하기 버튼
+   */
   const handleSave = async () => {
     try {
       setIsPending(true);
@@ -120,6 +127,16 @@ export default function TodoDetailItem({
     }
 
     setIsPending(false);
+  };
+
+  /**
+   * 삭제하기 버튼
+   */
+  const handleDelete = async (itemId: number) => {
+    if (!itemId) return;
+
+    await deleteTodo(itemId);
+    router.push("/");
   };
 
   return (
@@ -334,7 +351,11 @@ export default function TodoDetailItem({
           </button>
 
           {/** 삭제 버튼 */}
-          <button disabled={isPending}>
+          <button
+            disabled={isPending}
+            onClick={() => handleDelete(itemId!)}
+            className="cursor-pointer"
+          >
             <svg
               width="168"
               height="56"

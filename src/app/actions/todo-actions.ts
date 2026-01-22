@@ -115,3 +115,17 @@ export async function updateTodoWithImage({
   const data = await res.json();
   return data;
 }
+
+/**
+ * 할 일 항목 삭제 API
+ */
+export async function deleteTodo(itemId: number) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
+    {
+      method: "DELETE",
+    },
+  );
+
+  if (!res.ok) throw new Error(res.statusText);
+}
