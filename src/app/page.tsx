@@ -1,7 +1,7 @@
-import CreateTodoInput from "@/components/create-todo-input";
-import TodoList from "@/components/todo-list";
-import TodoEmpty from "@/components/todo-empty";
-import DoneEmpty from "@/components/done-empty";
+import CreateTodoInput from "@/components/todo/create-todo-input";
+import TodoList from "@/components/todo/todo-list";
+import TodoEmpty from "@/components/empty/todo-empty";
+import DoneEmpty from "@/components/empty/done-empty";
 
 export default function Home() {
   return (

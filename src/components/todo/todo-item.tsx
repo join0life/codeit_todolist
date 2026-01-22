@@ -13,23 +13,23 @@ export default function TodoItem({
   itemId: number;
 }) {
   const [isCompleted, setIsCompleted] = useState(checked);
-  const [isSaving, setIsSaving] = useState(false);
+  const [isPending, setIsPending] = useState(false);
 
   const handleToggle = async (next: boolean) => {
     setIsCompleted(next);
     try {
-      setIsSaving(true);
+      setIsPending(true);
       await updateTodo({ itemId, isCompleted: next });
     } catch (e) {
       setIsCompleted((prev) => !prev);
       console.error(e);
     } finally {
-      setIsSaving(false);
+      setIsPending(false);
     }
   };
 
   return (
-    <div className="flex w-full items-center rounded-[27px] border-2 border-slate-900 bg-white p-2 has-[input:checked]:bg-violet-100">
+    <div className="border-ui-strong has-[input:checked]:bg-brand-light flex w-full items-center rounded-[27px] border-2 bg-white p-2">
       <label
         className="flex cursor-pointer items-center gap-4"
         onClick={(e) => e.stopPropagation()}
@@ -38,7 +38,7 @@ export default function TodoItem({
           type="checkbox"
           className="peer sr-only"
           checked={isCompleted}
-          disabled={isSaving}
+          disabled={isPending}
           onChange={(e) => handleToggle(e.target.checked)}
         />
 
@@ -83,7 +83,7 @@ export default function TodoItem({
           href={`/items/${itemId}`}
           className="ml-auto peer-checked:line-through"
         >
-          <p className="text-slate-800">{label}</p>
+          <p className="text-ui-bold">{label}</p>
         </Link>
       </label>
     </div>

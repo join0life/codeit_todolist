@@ -4,7 +4,7 @@ import doneEmptySmall from "@/assets/done-empty-sm.png";
 
 export default function DoneEmpty() {
   return (
-    <div className="flex flex-col items-center justify-center text-center font-bold text-slate-400">
+    <div className="flex flex-col items-center justify-center text-center font-bold text-ui-muted">
       <Image
         src={doneEmptyLarge}
         alt="다 한 일정 디폴트 큰 이미지"

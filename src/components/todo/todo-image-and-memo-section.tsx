@@ -118,7 +118,7 @@ export default function TodoImageAndMemoSection({
       ) : (
         <button
           onClick={() => fileInputRef.current?.click()}
-          className="relative h-77.75 w-85.75 cursor-pointer rounded-3xl border-2 border-dashed border-slate-300 bg-slate-50 sm:w-174 md:w-96 lg:w-96 xl:w-96"
+          className="border-ui-border relative h-77.75 w-85.75 cursor-pointer rounded-3xl border-2 border-dashed bg-slate-50 sm:w-174 md:w-96 lg:w-96 xl:w-96"
         >
           <svg
             width="64"
@@ -162,7 +162,7 @@ export default function TodoImageAndMemoSection({
       )}
       {/** 메모 영역 */}
       <div className="relative h-77.75 w-85.75 rounded-3xl bg-yellow-50 bg-[linear-gradient(to_bottom,transparent_31px,#FEF3C7_31px,#FEF3C7_33px)] [background-size:100%_32px] sm:w-174 md:w-147 lg:w-147 xl:w-147">
-        <p className="absolute top-6 left-1/2 -translate-x-1/2 font-extrabold text-amber-800">
+        <p className="text-system-memo absolute top-6 left-1/2 -translate-x-1/2 font-extrabold">
           Memo
         </p>
 

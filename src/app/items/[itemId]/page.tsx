@@ -1,5 +1,5 @@
 import { fetchTodoDetail } from "@/app/actions/todo-actions";
-import TodoDetailItem from "@/components/todo-detail-item";
+import TodoDetailItem from "@/components/todo/todo-detail-item";
 
 export default async function Page({
   params,

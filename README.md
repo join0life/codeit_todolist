@@ -42,16 +42,37 @@
       /todo-actions.ts     # API 호출 함수 + 캐싱
     layout.tsx             # 메인 레이아웃
     page.tsx               # 홈 페이지
+    globals.css            # 디자인 시스템
+    not-found.tsx          # 404 페이지
 
   /components              # 공통(재사용) 컴포넌트
+    /button                # 버튼 컴포넌트
+    /empty                 # 빈 화면 UI
+    /todo                  # 할 일 목록, 항목 관련 컴포넌트
+    gnb.tsx                # GNB
   /assets                  # 이미지 파일 폴더
 
 
 ```
 
-## 고민한 것들
+## 고민한 지점
 
-- 홈 페이지에서 TODO와 DONE 섹션을 슬롯으로 나눌지, isCompleted 프롭스를 전달해 구분할지 고민
-  - 단순히 todo와 done 구분 + 아이템이 없을 때 이미지 UI를 렌더링하므로 isCompleted 프롭스를 전달해 구분하기로 결정
-- API 요청 후 Pending
-  - 간단히 state로 구현
+1. TODO/DONE 영역 분리 방식
+
+- 홈 페이지의 'TODO'와 'DONE' 섹션을 슬롯 구조로 분리할지,
+  혹은 하나의 리스트 컴포넌트에 `isCompleted` 프롭스를 전달해 조건부 렌더링할 지 고민
+  -> 본 과제에서는 상태 구분이 단순하고, 각 섹션에서 아이템 유무에 따른 빈 화면 UI만 필요했기 때문에 재사용성을 과도하게 분리하기보다 `isCompleted` 값을 기준으로 렌더링을 분기하는 방식 선택
+
+2. API 요청 시 Pending 상태 처리
+
+- API 요청 후 로딩 상태를 state로 처리할지, 혹은 어떻게 해야 할지 고민
+  -> Suspense 실험
+
+3. 아이콘 구현 방식
+
+- Figma에서 제공된 이미지를 png로 추출해 사용할 경우 해상도 저하 문제 발생
+  -> 최대한 Lucide React 라이브러리를 활용해 아이콘을 구현하고, 피치 못한 경우 Figma 파일에서 SVG를 추출해 이미지 대신 활용
+
+4. 상세 페이지 UX
+
+- 사용자 편의를 위해 `isCompleted === false`인 경우, 할 일 제목 input에 자동 포커스

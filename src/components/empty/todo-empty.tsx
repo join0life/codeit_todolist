@@ -4,7 +4,7 @@ import todoEmptySmall from "@/assets/todo-empty-sm.png";
 
 export default function TodoEmpty() {
   return (
-    <div className="flex flex-col items-center justify-center text-center font-bold text-slate-400">
+    <div className="flex flex-col items-center justify-center text-center font-bold text-ui-muted">
       <Image
         src={todoEmptyLarge}
         alt="해야 할 일정 디폴트 이미지"

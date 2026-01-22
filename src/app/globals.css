@@ -1,20 +1,84 @@
 @import url("https://cdn.rawgit.com/moonspam/NanumSquare/master/nanumsquare.css");
 @import "tailwindcss";
 
-* {
-  font-family: "NanumSquare";
+/* Base Styles */
+@layer base {
+  * {
+    font-family: "NanumSquare", sans-serif;
+  }
 }
 
-textarea.scrollbar-amber::-webkit-scrollbar {
-  width: 10px;
+@theme inline {
+  /* --- Slate 계열 (Neutral/UI) --- */
+  --color-ui-strong: #0f172a; /* slate/900 */
+  --color-ui-bold: #1e293b; /* slate/800 */
+  --color-ui-sub: #64748b; /* slate/500 */
+  --color-ui-muted: #94a3b8; /* slate/400 */
+  --color-ui-border: #cbd5e1; /* slate/300 */
+  --color-ui-line: #e2e8f0; /* slate/200 */
+  --color-ui-bg: #f1f5f9; /* slate/100 */
+
+  /* --- Violet 계열 (Brand/Primary) --- */
+  --color-brand-primary: #7c3aed; /* violet/600 */
+  --color-brand-light: #ede9fe; /* violet/100 */
+
+  /* --- 포인트 컬러 (System/Action) --- */
+  --color-system-delete: #f43f5e; /* rose/500 */
+  --color-system-success: #bef264; /* lime/300 */
+  --color-system-memo: #92400e; /* amber/800 */
 }
 
-textarea.scrollbar-amber::-webkit-scrollbar-thumb {
-  background-color: #FDE68A !important; /* amber-200 */
-  border-radius: 9999px;
+/* Utilities: 커스텀 스크롤바 */
+@layer utilities {
+  textarea.scrollbar-amber::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  textarea.scrollbar-amber::-webkit-scrollbar-thumb {
+    background-color: #fde68a !important;
+    border-radius: 9999px;
+  }
+
+  textarea.scrollbar-amber::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
-textarea.scrollbar-amber::-webkit-scrollbar-track {
-  background: transparent;
-}
+@layer components {
+  .btn-lg {
+    font-weight: 700;
+    border-radius: 24px;
+    padding: 2px;
+    width: 164px;
+    height: 52px;
+    border: 2px solid var(--color-ui-strong);
+    box-shadow: 4px 4px 0 0 rgba(15, 23, 42, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 4px;
+  }
 
+  .btn-responsive {
+    font-weight: 700;
+    border-radius: 24px;
+    padding: 18px;
+    border: 2px solid var(--color-ui-strong);
+    box-shadow: 4px 4px 0 0 rgba(15, 23, 42, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    gap: 4px;
+
+    width: 54px;
+    height: 52px;
+  }
+
+  @media (min-width: 640px) {
+    .btn-responsive {
+      width: 164px;
+    }
+  }
+}

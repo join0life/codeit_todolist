@@ -13,7 +13,8 @@ import {
 
 import TodoCheckboxSection from "./todo-checkbox-section";
 import TodoImageAndMemoSection from "./todo-image-and-memo-section";
-import EditAndDeleteButton from "./edit-and-delete-button";
+import EditButton from "../button/edit-button";
+import DeleteButton from "../button/delete-button";
 
 export default function TodoDetailItem({
   id: itemId,
@@ -92,12 +93,16 @@ export default function TodoDetailItem({
       />
 
       {/* 3️⃣ 수정 완료 & 삭제 버튼 */}
-      <EditAndDeleteButton
-        onSave={handleSave}
-        onDelete={handleDelete}
-        disabled={isPending}
-        itemId={itemId!}
-      />
+      <section>
+        <div className="m-0 flex items-center justify-center gap-4 p-0 sm:justify-center md:justify-end">
+          <EditButton onSave={handleSave} disabled={isPending} />
+          <DeleteButton
+            onDelete={handleDelete}
+            disabled={isPending}
+            itemId={itemId!}
+          />
+        </div>
+      </section>
     </div>
   );
 }
