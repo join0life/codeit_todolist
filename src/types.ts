@@ -1,6 +1,6 @@
 export type Item = {
-  id: number;
-  tenantId: string;
+  id?: number;
+  tenantId?: string;
   name: string;
   memo: string | null;
   imageUrl: string | null;
