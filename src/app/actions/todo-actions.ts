@@ -1,10 +1,15 @@
 "use server";
 
 import { TENANT_ID } from "@/constants";
-import { CreateTodoInput, Item, UpdateTodoInput } from "@/types";
+import { CreateTodoInput, Item, Todo, UpdateTodoInput } from "@/types";
 import { revalidatePath } from "next/cache";
 
-export async function createTodo({ name }: CreateTodoInput) {
+/**
+ * 할 일 생성 API
+ * @param
+ * @returns
+ */
+export async function createTodo({ name }: CreateTodoInput): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items`,
     {
@@ -25,13 +30,18 @@ export async function createTodo({ name }: CreateTodoInput) {
   return data;
 }
 
+/**
+ * 할 일 수정(isCompleted) API
+ * @param
+ * @returns
+ */
 export async function updateTodo({
   itemId,
   isCompleted,
 }: {
   itemId: number;
   isCompleted: boolean;
-}) {
+}): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
     {
@@ -48,6 +58,34 @@ export async function updateTodo({
   const data: UpdateTodoInput = await res.json();
   revalidatePath("/");
   return data;
+}
+
+/**
+ * 할 일 목록 조회 API
+ * @returns
+ */
+export async function fetchTodo() {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items`,
+    { cache: "no-cache" },
+  );
+  if (!res.ok) throw new Error(res.statusText);
+  const data: Todo[] = await res.json();
+  return data;
+}
+
+/**
+ * 할 일 상세 조회 API
+ * @param itemId
+ * @returns
+ */
+export async function fetchTodoDetail(itemId: number): Promise<Todo> {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
+    { cache: "no-cache" },
+  );
+  if (!res.ok) throw new Error(res.statusText);
+  return await res.json();
 }
 
 /**
@@ -82,7 +120,7 @@ export async function uploadImage(file: File): Promise<string> {
 }
 
 /**
- * 이미지 url과 함께 할 일 페이지 수정 API
+ * 이미지 url과 함께 할 일 상세 수정 API
  * @param itemId
  * @param payload
  * @returns data
@@ -93,7 +131,7 @@ export async function updateTodoWithImage({
   isCompleted,
   imageUrl,
   memo,
-}: Item) {
+}: Item): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
     {
@@ -117,7 +155,7 @@ export async function updateTodoWithImage({
 }
 
 /**
- * 할 일 항목 삭제 API
+ * 할 일 삭제 API
  */
 export async function deleteTodo(itemId: number) {
   const res = await fetch(

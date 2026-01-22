@@ -1,8 +1,22 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function GNB() {
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
-    <Link href={"/"}>
+    <Link
+      href="/"
+      onClick={(e) => {
+        if (pathname === "/") {
+          e.preventDefault();
+          router.refresh();
+        }
+      }}
+    >
       {/** 긴 로고 */}
       <div className="hidden cursor-pointer sm:block">
         <svg

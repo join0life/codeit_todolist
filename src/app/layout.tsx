@@ -1,4 +1,4 @@
-import GNB from "../components/gnb";
+import GNB from "@/components/gnb";
 import "./globals.css";
 
 export default function RootLayout({

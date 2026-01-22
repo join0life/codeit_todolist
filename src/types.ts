@@ -1,10 +1,10 @@
 export type Item = {
   id?: number;
   tenantId?: string;
-  name: string;
-  memo: string | null;
-  imageUrl: string | null;
-  isCompleted: boolean;
+  name?: string;
+  memo?: string | null;
+  imageUrl?: string | null;
+  isCompleted?: boolean;
 };
 
 export type Todo = Pick<Item, "id" | "name" | "isCompleted">;
@@ -19,3 +19,8 @@ export type UpdateTodoInput = Partial<{
   imageUrl: string | null;
   isCompleted: boolean;
 }>;
+
+export type ImageData = {
+  file: File;
+  previewUrl: string;
+};
