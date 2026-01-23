@@ -5,6 +5,16 @@ import DoneEmpty from "@/components/empty/done-empty";
 import { fetchTodo } from "./actions/todo-actions";
 import { Suspense } from "react";
 import Loader from "@/components/loader";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "투두리스트",
+  description: "코드잇 과제 - 투두리스트",
+  openGraph: {
+    title: "투두리스트",
+    description: "코드잇 과제 - 투두리스트",
+  },
+};
 
 async function AllTodos() {
   const data = await fetchTodo();
@@ -63,11 +73,7 @@ async function AllTodos() {
 
 export default async function Home() {
   return (
-    <Suspense
-      fallback={
-        <Loader/>
-      }
-    >
+    <Suspense fallback={<Loader />}>
       <AllTodos />
     </Suspense>
   );
