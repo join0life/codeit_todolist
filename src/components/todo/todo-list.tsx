@@ -1,6 +1,5 @@
 import { ReactNode } from "react";
 import TodoItem from "./todo-item";
-import { fetchTodo } from "@/app/actions/todo-actions";
 import { Item } from "@/types";
 
 export default async function TodoList({

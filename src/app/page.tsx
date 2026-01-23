@@ -3,18 +3,22 @@ import TodoList from "@/components/todo/todo-list";
 import TodoEmpty from "@/components/empty/todo-empty";
 import DoneEmpty from "@/components/empty/done-empty";
 import { fetchTodo } from "./actions/todo-actions";
+import { Suspense } from "react";
+import Loader from "@/components/loader";
 
-export default async function Home() {
+async function AllTodos() {
   const data = await fetchTodo();
   const isEmpty = data.length === 0;
 
   return (
     <div className="mx-auto max-w-300 p-4 sm:p-6 xl:p-6">
       <div className="flex flex-col gap-10">
+        {/** 할 일 추가 섹션 */}
         <section className="flex w-full items-center justify-center gap-2 sm:gap-4 xl:gap-4">
-          <CreateTodoInput isEmpty={isEmpty}/>
+          <CreateTodoInput isEmpty={isEmpty} />
         </section>
 
+        {/** TODO & DONE */}
         <section className="flex flex-col gap-6 md:flex-row">
           {/** TODO 목록 */}
           <div className="flex w-full flex-col gap-4 md:w-1/2">
@@ -54,5 +58,17 @@ export default async function Home() {
         </section>
       </div>
     </div>
+  );
+}
+
+export default async function Home() {
+  return (
+    <Suspense
+      fallback={
+        <Loader/>
+      }
+    >
+      <AllTodos />
+    </Suspense>
   );
 }
