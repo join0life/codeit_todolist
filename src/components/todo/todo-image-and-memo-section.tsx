@@ -4,12 +4,12 @@ import editBtn from "@/assets/edit-btn.png";
 import type { ImageData } from "@/types";
 
 type Props = {
-  initialImageUrl?: string | null;
+  initialImageUrl: string | null;
   image?: ImageData;
   setImage: (image?: ImageData) => void;
   disabled?: boolean;
-  memo?: string;
-  setMemo: (v?: string) => void;
+  memo: string | null;
+  setMemo: (v: string | null) => void;
 };
 
 export default function TodoImageAndMemoSection({

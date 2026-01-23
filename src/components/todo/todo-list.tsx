@@ -21,14 +21,10 @@ export default async function TodoList({
   return (
     <>
       {orderedTodo.map((todo) => {
-        if (!todo.id) return;
-        if (!todo.name) return;
         return (
           <TodoItem
-            itemId={todo.id}
             key={`${todo.id} - ${todo.name}`}
-            label={todo.name}
-            checked={todo.isCompleted}
+            {...todo}
           />
         );
       })}

@@ -3,8 +3,8 @@ import { useEffect, useRef } from "react";
 type Props = {
   name?: string;
   isCompleted?: boolean;
-  onNameChange: (v: string) => void;
-  onCompletedChange: (v: boolean) => void;
+  onNameChange: (name: string) => void;
+  onCompletedChange: (isCompleted: boolean) => void;
 };
 
 export default function TodoCheckboxSection({

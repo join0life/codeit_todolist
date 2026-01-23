@@ -1,27 +1,21 @@
 "use client";
 import { updateTodo } from "@/app/actions/todo-actions";
+import { Item } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
 
-export default function TodoItem({
-  label,
-  checked,
-  itemId,
-}: {
-  label: string;
-  checked?: boolean;
-  itemId: number;
-}) {
-  const [isCompleted, setIsCompleted] = useState(checked);
+export default function TodoItem(todo: Item) {
+  const { id: itemId, name, isCompleted } = todo;
+  const [isSelected, setIsSelected] = useState(isCompleted);
   const [isPending, setIsPending] = useState(false);
 
   const handleToggle = async (next: boolean) => {
-    setIsCompleted(next);
+    setIsSelected(next);
     try {
       setIsPending(true);
-      await updateTodo({ itemId, isCompleted: next });
+      await updateTodo(itemId, { isCompleted: next });
     } catch (e) {
-      setIsCompleted((prev) => !prev);
+      setIsSelected((prev) => !prev);
       console.error(e);
     } finally {
       setIsPending(false);
@@ -40,7 +34,7 @@ export default function TodoItem({
           <input
             type="checkbox"
             className="peer sr-only"
-            checked={isCompleted}
+            checked={isSelected}
             disabled={isPending}
             onChange={(e) => handleToggle(e.target.checked)}
           />
@@ -69,7 +63,7 @@ export default function TodoItem({
         </label>
 
         <div className="peer-checked:line-through">
-          <p className="text-ui-bold">{label}</p>
+          <p className="text-ui-bold">{name}</p>
         </div>
       </div>
     </Link>

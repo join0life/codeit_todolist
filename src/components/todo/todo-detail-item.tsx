@@ -7,7 +7,7 @@ import type { ImageData } from "@/types";
 import { useRouter } from "next/navigation";
 import {
   deleteTodo,
-  updateTodoWithImage,
+  updateTodo,
   uploadImage,
 } from "@/app/actions/todo-actions";
 
@@ -45,8 +45,7 @@ export default function TodoDetailItem({
         finalImageUrl = await uploadImage(image.file);
       }
 
-      await updateTodoWithImage({
-        id: itemId!,
+      await updateTodo(itemId, {
         name: name || "",
         isCompleted: isCompleted ?? false,
         imageUrl: finalImageUrl,
@@ -89,7 +88,7 @@ export default function TodoDetailItem({
         image={image}
         setImage={setImage}
         disabled={isPending}
-        memo={memo!}
+        memo={memo}
         setMemo={setMemo}
       />
 
@@ -100,7 +99,7 @@ export default function TodoDetailItem({
           <DeleteButton
             onDelete={handleDelete}
             disabled={isPending}
-            itemId={itemId!}
+            itemId={itemId}
           />
         </div>
       </section>
