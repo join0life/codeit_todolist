@@ -7,7 +7,6 @@ type Props = {
 };
 
 export default function DeleteButton({ onDelete, disabled, itemId }: Props) {
-  if (!itemId) return;
   return (
     <button
       disabled={disabled}

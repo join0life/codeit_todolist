@@ -20,20 +20,18 @@ export default async function TodoList({
 
   return (
     <>
-      <div className="flex w-full flex-col items-center justify-center gap-4">
-        {orderedTodo.map((todo) => {
-          if (!todo.id) return;
-          if (!todo.name) return;
-          return (
-            <TodoItem
-              itemId={todo.id}
-              key={`${todo.id} - ${todo.name}`}
-              label={todo.name}
-              checked={todo.isCompleted}
-            />
-          );
-        })}
-      </div>
+      {orderedTodo.map((todo) => {
+        if (!todo.id) return;
+        if (!todo.name) return;
+        return (
+          <TodoItem
+            itemId={todo.id}
+            key={`${todo.id} - ${todo.name}`}
+            label={todo.name}
+            checked={todo.isCompleted}
+          />
+        );
+      })}
     </>
   );
 }

@@ -1,7 +1,7 @@
 "use server";
 
 import { TENANT_ID } from "@/constants";
-import { CreateTodoInput, Item, Todo, UpdateTodoInput } from "@/types";
+import { CreateItemDto, Item, UpdateItemDto } from "@/types";
 import { revalidatePath } from "next/cache";
 
 /**
@@ -9,7 +9,7 @@ import { revalidatePath } from "next/cache";
  * @param
  * @returns
  */
-export async function createTodo({ name }: CreateTodoInput): Promise<Item> {
+export async function createTodo({ name }: CreateItemDto): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items`,
     {
@@ -25,23 +25,20 @@ export async function createTodo({ name }: CreateTodoInput): Promise<Item> {
   );
 
   if (!res.ok) throw new Error(res.statusText);
-  const data = res.json();
+  const data = await res.json();
   revalidatePath("/");
   return data;
 }
 
 /**
- * 할 일 수정(isCompleted) API
+ * 할 일 수정 API
  * @param
  * @returns
  */
-export async function updateTodo({
-  itemId,
-  isCompleted,
-}: {
-  itemId: number;
-  isCompleted: boolean;
-}): Promise<Item> {
+export async function updateTodo(
+  itemId: number,
+  updateData: UpdateItemDto,
+): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
     {
@@ -50,12 +47,12 @@ export async function updateTodo({
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify({ isCompleted }),
+      body: JSON.stringify(updateData),
     },
   );
 
   if (!res.ok) throw new Error(res.statusText);
-  const data: UpdateTodoInput = await res.json();
+  const data: Item = await res.json();
   revalidatePath("/");
   return data;
 }
@@ -70,7 +67,7 @@ export async function fetchTodo() {
     { cache: "no-cache" },
   );
   if (!res.ok) throw new Error(res.statusText);
-  const data: Todo[] = await res.json();
+  const data: Item[] = await res.json();
   return data;
 }
 
@@ -79,7 +76,7 @@ export async function fetchTodo() {
  * @param itemId
  * @returns
  */
-export async function fetchTodoDetail(itemId: number): Promise<Todo> {
+export async function fetchTodoDetail(itemId: number): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
     { cache: "no-cache" },
@@ -110,48 +107,12 @@ export async function uploadImage(file: File): Promise<string> {
     {
       method: "POST",
       body: formData,
-      headers: { Accpept: "application/json" },
     },
   );
 
   if (!res.ok) throw new Error(res.statusText);
   const data: { url: string } = await res.json();
   return data.url;
-}
-
-/**
- * 이미지 url과 함께 할 일 상세 수정 API
- * @param itemId
- * @param payload
- * @returns data
- */
-export async function updateTodoWithImage({
-  id: itemId,
-  name,
-  isCompleted,
-  imageUrl,
-  memo,
-}: Item): Promise<Item> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        isCompleted,
-        imageUrl,
-        memo,
-      }),
-    },
-  );
-
-  if (!res.ok) throw new Error(res.statusText);
-  const data = await res.json();
-  return data;
 }
 
 /**
@@ -166,4 +127,5 @@ export async function deleteTodo(itemId: number) {
   );
 
   if (!res.ok) throw new Error(res.statusText);
+  revalidatePath("/");
 }

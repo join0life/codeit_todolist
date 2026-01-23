@@ -21,11 +21,8 @@ export default function TodoCheckboxSection({
 
   return (
     <section>
-      <div className="border-ui-strong has-[input:checked]:bg-brand-light flex h-16 w-full items-center justify-center rounded-3xl border-2 bg-white p-2">
-        <label
-          className="flex cursor-pointer items-center gap-4"
-          onClick={(e) => e.stopPropagation()}
-        >
+      <div className="border-ui-strong has-[input:checked]:bg-brand-light flex h-16 w-full items-center rounded-3xl border-2 bg-white p-2">
+        <label className="flex w-full cursor-pointer items-center justify-center gap-4">
           <input
             type="checkbox"
             className="peer sr-only"
@@ -34,7 +31,7 @@ export default function TodoCheckboxSection({
           />
 
           {/* 기본 체크 박스 */}
-          <div className="border-ui-strong block h-8 w-8 rounded-full border-2 bg-yellow-50 peer-checked:hidden"></div>
+          <div className="border-ui-strong block h-8 w-8 rounded-full border-2 bg-yellow-50 peer-checked:hidden" />
 
           {/* 체크 시 보라색 원*/}
           <svg
@@ -49,17 +46,17 @@ export default function TodoCheckboxSection({
             <path
               d="M8 16.2857L13.8182 22L24 12"
               stroke="#FEFCE8"
-              stroke-width="4"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
-
+          
           <input
             ref={inputRef}
             value={name}
             onChange={(e) => onNameChange(e.target.value)}
-            className="text-ui-bold underline underline-offset-2 peer-checked:line-through focus:outline-none"
+            className="text-ui-bold underline underline-offset-2 peer-checked:line-through"
           />
         </label>
       </div>

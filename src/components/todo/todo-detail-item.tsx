@@ -38,18 +38,19 @@ export default function TodoDetailItem({
     setIsPending(true);
 
     try {
-      let finalImageUrl = initialImageUrl; // 기존 이미지 url이 있으면 재사용
+      const finalMemo = memo?.trim() === "" ? null : memo || null;
+      let finalImageUrl = initialImageUrl || null; // 기존 이미지 url이 있으면 재사용
 
       if (image) {
         finalImageUrl = await uploadImage(image.file);
       }
 
       await updateTodoWithImage({
-        id: itemId,
-        name,
-        isCompleted,
+        id: itemId!,
+        name: name || "",
+        isCompleted: isCompleted ?? false,
         imageUrl: finalImageUrl,
-        memo: memo?.trim() === "" ? null : memo,
+        memo: finalMemo,
       });
 
       router.push("/");
