@@ -1,9 +1,11 @@
 import { Plus } from "lucide-react";
 
 export default function AddButton({
+  isEmpty = false,
   disabled,
   onClick,
 }: {
+  isEmpty?: boolean;
   disabled?: boolean;
   onClick?: () => void;
 }) {
@@ -11,7 +13,7 @@ export default function AddButton({
     <button
       disabled={disabled}
       onClick={onClick}
-      className="hover:bg-brand-primary bg-ui-line btn-responsive gap-1 hover:text-white"
+      className={`${isEmpty ? "bg-brand-primary text-white" : "bg-ui-line"} btn-responsive gap-1`}
     >
       <Plus width={16} height={16} />
       <span className="hidden sm:inline">추가하기</span>

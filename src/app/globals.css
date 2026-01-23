@@ -24,7 +24,7 @@
 
   /* --- 포인트 컬러 (System/Action) --- */
   --color-system-delete: #f43f5e; /* rose/500 */
-  --color-system-success: #bef264; /* lime/300 */
+  --color-system-active: #bef264; /* lime/300 */
   --color-system-memo: #92400e; /* amber/800 */
 }
 

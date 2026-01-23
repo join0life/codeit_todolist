@@ -27,9 +27,16 @@ export default function TodoDetailItem({
   const [isCompleted, setIsCompleted] = useState(initialIsCompleted);
   const [image, setImage] = useState<ImageData>();
   const [memo, setMemo] = useState(initialMemo);
+
   const [isPending, setIsPending] = useState(false);
 
   const router = useRouter();
+
+  const isChange =
+    name !== initialName ||
+    isCompleted !== initialIsCompleted ||
+    memo !== initialMemo ||
+    image !== undefined;
 
   /**
    * 수정하기 버튼
@@ -95,7 +102,7 @@ export default function TodoDetailItem({
       {/* 3️⃣ 수정 완료 & 삭제 버튼 */}
       <section>
         <div className="m-0 flex items-center justify-center gap-4 p-0 sm:justify-center md:justify-end">
-          <EditButton onSave={handleSave} disabled={isPending} />
+          <EditButton onSave={handleSave} disabled={isPending} isActive={isChange}/>
           <DeleteButton
             onDelete={handleDelete}
             disabled={isPending}

@@ -1,15 +1,17 @@
 import { ReactNode } from "react";
 import TodoItem from "./todo-item";
 import { fetchTodo } from "@/app/actions/todo-actions";
+import { Item } from "@/types";
 
 export default async function TodoList({
   showCompleted,
   empty,
+  data,
 }: {
   showCompleted: boolean;
   empty: ReactNode;
+  data: Item[];
 }) {
-  const data = await fetchTodo();
   const filteredTodo = data.filter(
     (todo) => todo.isCompleted === showCompleted,
   );
@@ -21,12 +23,7 @@ export default async function TodoList({
   return (
     <>
       {orderedTodo.map((todo) => {
-        return (
-          <TodoItem
-            key={`${todo.id} - ${todo.name}`}
-            {...todo}
-          />
-        );
+        return <TodoItem key={`${todo.id} - ${todo.name}`} {...todo} />;
       })}
     </>
   );

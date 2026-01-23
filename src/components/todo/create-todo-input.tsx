@@ -4,7 +4,11 @@ import { useState } from "react";
 import AddButton from "../button/add-button";
 import { createTodo } from "@/app/actions/todo-actions";
 
-export default function CreateTodoInput() {
+export default function CreateTodoInput({
+  isEmpty = false,
+}: {
+  isEmpty?: boolean;
+}) {
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -40,7 +44,7 @@ export default function CreateTodoInput() {
           />
         </div>
       </div>
-      <AddButton onClick={handleCreateClick} disabled={isSubmitting} />
+      <AddButton isEmpty={isEmpty} onClick={handleCreateClick} disabled={isSubmitting} />
     </>
   );
 }

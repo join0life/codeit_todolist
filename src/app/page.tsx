@@ -2,13 +2,17 @@ import CreateTodoInput from "@/components/todo/create-todo-input";
 import TodoList from "@/components/todo/todo-list";
 import TodoEmpty from "@/components/empty/todo-empty";
 import DoneEmpty from "@/components/empty/done-empty";
+import { fetchTodo } from "./actions/todo-actions";
 
-export default function Home() {
+export default async function Home() {
+  const data = await fetchTodo();
+  const isEmpty = data.length === 0;
+
   return (
     <div className="mx-auto max-w-300 p-4 sm:p-6 xl:p-6">
       <div className="flex flex-col gap-10">
         <section className="flex w-full items-center justify-center gap-2 sm:gap-4 xl:gap-4">
-          <CreateTodoInput />
+          <CreateTodoInput isEmpty={isEmpty}/>
         </section>
 
         <section className="flex flex-col gap-6 md:flex-row">
@@ -27,7 +31,7 @@ export default function Home() {
                 fill="#15803D"
               />
             </svg>
-            <TodoList showCompleted={false} empty={<TodoEmpty />} />
+            <TodoList data={data} showCompleted={false} empty={<TodoEmpty />} />
           </div>
 
           {/** DONE 목록 */}
@@ -45,7 +49,7 @@ export default function Home() {
                 fill="#FCD34D"
               />
             </svg>
-            <TodoList showCompleted={true} empty={<DoneEmpty />} />
+            <TodoList data={data} showCompleted={true} empty={<DoneEmpty />} />
           </div>
         </section>
       </div>

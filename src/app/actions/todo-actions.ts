@@ -24,7 +24,11 @@ export async function createTodo({ name }: CreateItemDto): Promise<Item> {
     },
   );
 
-  if (!res.ok) throw new Error(res.statusText);
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || res.statusText);
+  }
+
   const data = await res.json();
   revalidatePath("/");
   return data;
@@ -39,6 +43,27 @@ export async function updateTodo(
   itemId: number,
   updateData: UpdateItemDto,
 ): Promise<Item> {
+  const sanitizeValue = (value: any) => {
+    if (value === null) return "";
+    if (value === undefined) return undefined;
+    return value;
+  };
+
+  const payload: Record<string, any> = {};
+
+  if (updateData.name !== undefined) {
+    payload.name = updateData.name;
+  }
+  if (updateData.isCompleted !== undefined) {
+    payload.isCompleted = updateData.isCompleted;
+  }
+  if (updateData.memo !== undefined) {
+    payload.memo = sanitizeValue(updateData.memo);
+  }
+  if (updateData.imageUrl !== undefined) {
+    payload.imageUrl = sanitizeValue(updateData.imageUrl);
+  }
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
     {
@@ -47,11 +72,15 @@ export async function updateTodo(
         "Content-Type": "application/json",
         Accept: "application/json",
       },
-      body: JSON.stringify(updateData),
+      body: JSON.stringify(payload),
     },
   );
 
-  if (!res.ok) throw new Error(res.statusText);
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || res.statusText);
+  }
+
   const data: Item = await res.json();
   revalidatePath("/");
   return data;
@@ -66,7 +95,12 @@ export async function fetchTodo() {
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items`,
     { cache: "no-cache" },
   );
-  if (!res.ok) throw new Error(res.statusText);
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || res.statusText);
+  }
+
   const data: Item[] = await res.json();
   return data;
 }
@@ -81,7 +115,12 @@ export async function fetchTodoDetail(itemId: number): Promise<Item> {
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
     { cache: "no-cache" },
   );
-  if (!res.ok) throw new Error(res.statusText);
+
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || res.statusText);
+  }
+
   return await res.json();
 }
 
@@ -110,7 +149,11 @@ export async function uploadImage(file: File): Promise<string> {
     },
   );
 
-  if (!res.ok) throw new Error(res.statusText);
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || res.statusText);
+  }
+
   const data: { url: string } = await res.json();
   return data.url;
 }
@@ -126,6 +169,10 @@ export async function deleteTodo(itemId: number) {
     },
   );
 
-  if (!res.ok) throw new Error(res.statusText);
+  if (!res.ok) {
+    const errorData = await res.json().catch(() => null);
+    throw new Error(errorData?.message || res.statusText);
+  }
+
   revalidatePath("/");
 }
