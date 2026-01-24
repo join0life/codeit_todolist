@@ -2,10 +2,12 @@ import CreateTodoInput from "@/components/todo/create-todo-input";
 import TodoList from "@/components/todo/todo-list";
 import TodoEmpty from "@/components/empty/todo-empty";
 import DoneEmpty from "@/components/empty/done-empty";
+import { Metadata } from "next";
 import { fetchTodo } from "./actions/todo-actions";
 import { Suspense } from "react";
 import Loader from "@/components/loader";
-import { Metadata } from "next";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "투두리스트",
@@ -16,9 +18,12 @@ export const metadata: Metadata = {
   },
 };
 
-async function AllTodos() {
+async function TodoAll() {
   const data = await fetchTodo();
   const isEmpty = data.length === 0;
+
+  const todoList = data.filter((item) => !item.isCompleted);
+  const doneList = data.filter((item) => item.isCompleted);
 
   return (
     <div className="mx-auto max-w-300 p-4 sm:p-6 xl:p-6">
@@ -28,7 +33,6 @@ async function AllTodos() {
           <CreateTodoInput isEmpty={isEmpty} />
         </section>
 
-        {/** TODO & DONE */}
         <section className="flex flex-col gap-6 md:flex-row">
           {/** TODO 목록 */}
           <div className="flex w-full flex-col gap-4 md:w-1/2">
@@ -45,7 +49,7 @@ async function AllTodos() {
                 fill="#15803D"
               />
             </svg>
-            <TodoList data={data} showCompleted={false} empty={<TodoEmpty />} />
+            <TodoList data={todoList} empty={<TodoEmpty />} />
           </div>
 
           {/** DONE 목록 */}
@@ -63,7 +67,7 @@ async function AllTodos() {
                 fill="#FCD34D"
               />
             </svg>
-            <TodoList data={data} showCompleted={true} empty={<DoneEmpty />} />
+            <TodoList data={doneList} empty={<DoneEmpty />} />
           </div>
         </section>
       </div>
@@ -74,7 +78,7 @@ async function AllTodos() {
 export default async function Home() {
   return (
     <Suspense fallback={<Loader />}>
-      <AllTodos />
+      <TodoAll />
     </Suspense>
   );
 }

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import AddButton from "../button/add-button";
 import { createTodo } from "@/app/actions/todo-actions";
+import { useRouter } from "next/navigation";
 
 export default function CreateTodoInput({
   isEmpty = false,
@@ -12,12 +13,15 @@ export default function CreateTodoInput({
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const router = useRouter();
+
   const handleCreateClick = async () => {
     if (name.trim() === "") return;
     try {
       setIsSubmitting(true);
       await createTodo({ name });
       setName("");
+      router.refresh();
     } catch (e) {
       console.error(e);
     } finally {
@@ -44,7 +48,11 @@ export default function CreateTodoInput({
           />
         </div>
       </div>
-      <AddButton isEmpty={isEmpty} onClick={handleCreateClick} disabled={isSubmitting} />
+      <AddButton
+        isEmpty={isEmpty}
+        onClick={handleCreateClick}
+        disabled={isSubmitting}
+      />
     </>
   );
 }

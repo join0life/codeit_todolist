@@ -8,11 +8,11 @@ import { Suspense } from "react";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ itemId: string }>;
 }) {
-  const { id: itemsId } = await params;
+  const { itemId } = await params;
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemsId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
   );
   if (!res.ok) throw new Error(res.statusText);
 

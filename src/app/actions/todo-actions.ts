@@ -21,6 +21,7 @@ export async function createTodo({ name }: CreateItemDto): Promise<Item> {
       body: JSON.stringify({
         name,
       }),
+      cache: "no-store",
     },
   );
 
@@ -30,7 +31,7 @@ export async function createTodo({ name }: CreateItemDto): Promise<Item> {
   }
 
   const data = await res.json();
-  revalidatePath("/");
+  revalidatePath("/", "page");
   return data;
 }
 
@@ -73,6 +74,7 @@ export async function updateTodo(
         Accept: "application/json",
       },
       body: JSON.stringify(payload),
+      cache: "no-store",
     },
   );
 
@@ -82,7 +84,7 @@ export async function updateTodo(
   }
 
   const data: Item = await res.json();
-  revalidatePath("/");
+  revalidatePath("/", "page");
   return data;
 }
 
@@ -93,7 +95,7 @@ export async function updateTodo(
 export async function fetchTodo() {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items`,
-    { cache: "no-cache" },
+    { cache: "no-store" },
   );
 
   if (!res.ok) {
@@ -113,7 +115,7 @@ export async function fetchTodo() {
 export async function fetchTodoDetail(itemId: number): Promise<Item> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/${TENANT_ID}/items/${itemId}`,
-    { cache: "no-cache" },
+    { cache: "no-store" },
   );
 
   if (!res.ok) {

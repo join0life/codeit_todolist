@@ -2,6 +2,7 @@
 import { updateTodo } from "@/app/actions/todo-actions";
 import { Item } from "@/types";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function TodoItem(todo: Item) {
@@ -9,11 +10,15 @@ export default function TodoItem(todo: Item) {
   const [isSelected, setIsSelected] = useState(isCompleted);
   const [isPending, setIsPending] = useState(false);
 
+  const router = useRouter();
+
   const handleToggle = async (next: boolean) => {
     setIsSelected(next);
     try {
       setIsPending(true);
       await updateTodo(itemId, { isCompleted: next });
+
+      router.refresh();
     } catch (e) {
       setIsSelected((prev) => !prev);
       console.error(e);
