@@ -2,6 +2,9 @@
 
 투두리스트 만들기
 
+## 서비스 URL
+https://codeit-todolist-pied.vercel.app/
+
 ## 기술 스택
 
 - Next.js (App Router)
